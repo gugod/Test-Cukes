@@ -1,6 +1,6 @@
 #!/usr/bin/env perl -w
 use strict;
-use Test::More tests => 3;
+use Test::More tests => 4;
 use Test::Cukes::Scenario;
 
 my $scenario = Test::Cukes::Scenario->new(<<SCENARIO_TEXT);
@@ -10,6 +10,7 @@ Scenario: Some random scenario text
   Then the final shall be reached
 SCENARIO_TEXT
 
+is($scenario->name, "Some random scenario text");
 is_deeply($scenario->given, ["the pre-conditions is there"]);
 is_deeply($scenario->when, ["it branches into the second level"]);
 is_deeply($scenario->then, ["the final shall be reached"]);
