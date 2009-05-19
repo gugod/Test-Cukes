@@ -22,6 +22,6 @@ is(scalar @{ $feature->scenarios }, 1);
 
 my $scenario = $feature->scenarios->[0];
 is($scenario->name, "Some random scenario text");
-is_deeply($scenario->givens, ["the pre-conditions is there"]);
-is_deeply($scenario->whens, ["it branches into the second level"]);
-is_deeply($scenario->thens, ["the final shall be reached"]);
+is_deeply($scenario->steps, ["the pre-conditions is there",
+                             "it branches into the second level",
+                             "the final shall be reached"]);
