@@ -29,7 +29,7 @@ sub BUILDARGS {
                     $args->{name} = $1;
                 }
                 when (/^  (Given|When|Then|And)\s(.+)$/) {
-                    push @{$args->{ steps }}, $2;
+                    push @{$args->{ steps }}, "$1 $2";
                 }
             }
         }

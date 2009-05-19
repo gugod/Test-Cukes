@@ -11,6 +11,6 @@ Scenario: Some random scenario text
 SCENARIO_TEXT
 
 is($scenario->name, "Some random scenario text");
-is_deeply($scenario->steps, ["the pre-conditions is there",
-                             "it branches into the second level",
-                             "the final shall be reached"]);
+is_deeply($scenario->steps, ["Given the pre-conditions is there",
+                             "When it branches into the second level",
+                             "Then the final shall be reached"]);
