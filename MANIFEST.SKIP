@@ -19,3 +19,5 @@
 ^[^/]+\.pl$
 ^\.shipit$
 ^\.gitignore$
+^cover_db/
+
