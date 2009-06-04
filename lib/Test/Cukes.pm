@@ -4,9 +4,10 @@ use warnings;
 use Exporter::Lite;
 use Test::More;
 use Test::Cukes::Feature;
+use Carp::Assert;
 
 our $VERSION = "0.02";
-our @EXPORT = qw(feature runtests Given When Then);
+our @EXPORT = qw(feature runtests Given When Then assert affirm should shouldnt);
 
 my $steps = {};
 my $feature = {};
