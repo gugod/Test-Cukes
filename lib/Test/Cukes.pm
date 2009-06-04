@@ -6,7 +6,7 @@ use Test::More;
 use Test::Cukes::Feature;
 use Carp::Assert;
 
-our $VERSION = "0.02";
+our $VERSION = "0.03";
 our @EXPORT = qw(feature runtests Given When Then assert affirm should shouldnt);
 
 my $steps = {};
@@ -44,6 +44,7 @@ sub runtests {
                     Test::More::ok(!$@, $step_text);
 
                     if ($@) {
+                        Test::More::diag($@);
                         $skip = 1;
                         $skip_reason = "Failed: $step_text";
                     }
