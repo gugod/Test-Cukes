@@ -1,6 +1,5 @@
 #!/usr/bin/env perl -w
 use strict;
-use Test::More qw(no_plan);
 use Test::Cukes;
 
 feature(<<FEATURE_TEXT);
@@ -17,19 +16,21 @@ FEATURE_TEXT
 my @passed;
 
 Given qr/blah1/ => sub {
-    pass("blah 1");
     push @passed, 1;
+
+    assert @passed == 1;
 };
 
 When qr/blah2/ => sub {
-    pass("blah 2");
     push @passed, 2;
+    assert @passed == 2;
 };
 
 Then qr/blah3/ => sub {
-    pass("blah 3");
     push @passed, 3;
+    assert @passed == 3;
+
+    assert( @{[ 1, 2, 3 ]} == @passed );
 };
 
 runtests;
-is_deeply(\@passed, [1,2,3], "All step handlers are invoked.");

@@ -4,9 +4,10 @@ use warnings;
 use Exporter::Lite;
 use Test::More;
 use Test::Cukes::Feature;
+use Carp::Assert;
 
-our $VERSION = "0.01";
-our @EXPORT = qw(feature runtests Given When Then);
+our $VERSION = "0.02";
+our @EXPORT = qw(feature runtests Given When Then assert affirm should shouldnt);
 
 my $steps = {};
 my $feature = {};
@@ -20,20 +21,39 @@ sub feature {
 
 sub runtests {
     my $caller = caller;
+    my $total_tests = 0;
+    for my $scenario (@{$feature->{$caller}->scenarios}) {
+        $total_tests += @{$scenario->steps};
+    }
+
+    Test::More::plan(tests => $total_tests);
+
+    my $skip = 0;
+    my $skip_reason = "";
     for my $scenario (@{$feature->{$caller}->scenarios}) {
         my %steps = %{$steps->{$caller}};
         for my $step_text (@{$scenario->steps}) {
-            Test::More::note( $step_text );
-
             my (undef, $step) = split " ", $step_text, 2;
+
+        SKIP:
             while (my ($step_pattern, $cb) = each %steps) {
+                Test::More::skip($step, 1) if $skip;
+
                 if ($step =~ m/$step_pattern/) {
-                    $cb->();
+                    eval { $cb->(); };
+                    Test::More::ok(!$@, $step_text);
+
+                    if ($@) {
+                        $skip = 1;
+                        $skip_reason = "Failed: $step_text";
+                    }
                     next;
                 }
             }
         }
     }
+
+    return 0;
 }
 
 sub _add_step {
@@ -74,30 +94,26 @@ Write your test program like this:
   TEXT
 
   Given qr/the test program is running/, sub {
-      pass("running");
+      assert "running";
   }
 
   When qr/it reaches this step/, sub {
-      pass("reaches");
+      assert "reaches";
   }
 
   Then qr/it should pass/, sub {
-      pass("passes");
+      assert "passes";
   }
 
-  plan tests => 3;
   runtests;
 
 When it runs, it looks like this:
 
     > perl test.pl
     1..3
-    # Given the test program is running
-    ok 1 - running
-    # When it reaches this step
-    ok 2 - reaches
-    # Then it should pass
-    ok 3 - passes
+    ok 1 - Given the test program is running
+    ok 2 - When it reaches this step
+    ok 3 - Then it should pass
 
 =head1 DESCRIPTION
 
@@ -108,9 +124,20 @@ family of C<Test::*> modules. It uses L<Test::More::note> function
 internally to print messages.
 
 This module implements the Given-When-Then clause only in English. To
-uses it in the test programs, you feed your feature text into
-C<feature> function, defines your step handlers, and then run all the
-tests by calling C<runtests>.
+uses it in the test programs, feed the feature text into C<feature>
+function, defines your step handlers, and then run all the tests by
+calling C<runtests>. Each steps should use C<assert> instead of C<ok>
+or C<is> to verify desired result.
+
+If any assertion in the Given block failed, the the corresponding
+C<When> and C<Then> blocks are skipped.
+
+You don't need to specify the number of tests with C<plan>. Each step
+block itself is simply one test. If the block died, it's then
+considered failed. Otherwise it's considered as passing.
+
+Test::Cukes re-exports C<assert> function from C<Carp::Assert> for you
+to use in the step block.
 
 For more info about how to define feature and scenarios, please read
 the documents from L<http://cukes.info>.
@@ -125,6 +152,8 @@ The official Cucumber web-page, L<http://cukes.info/>.
 
 cucumber.pl, L<http://search.cpan.org/dist/cucumber/>, another Perl
 implementation of Cucumber tool.
+
+L<Carp::Assert>
 
 =head1 LICENSE AND COPYRIGHT
 
