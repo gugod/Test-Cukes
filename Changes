@@ -1,4 +1,7 @@
-Revision history for Perl extension Test::Cukes
+# Revision history for Perl extension Test::Cukes
+
+0.03:
+- if a step died, diag its dying message.
 
 0.02:
 - Count each block as one assertion-based test

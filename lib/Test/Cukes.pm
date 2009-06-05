@@ -28,16 +28,17 @@ sub runtests {
 
     Test::More::plan(tests => $total_tests);
 
-    my $skip = 0;
-    my $skip_reason = "";
     for my $scenario (@{$feature->{$caller}->scenarios}) {
+        my $skip = 0;
+        my $skip_reason = "";
+
         my %steps = %{$steps->{$caller}};
+    SKIP:
         for my $step_text (@{$scenario->steps}) {
             my (undef, $step) = split " ", $step_text, 2;
+            Test::More::skip($step, 1) if $skip;
 
-        SKIP:
             while (my ($step_pattern, $cb) = each %steps) {
-                Test::More::skip($step, 1) if $skip;
 
                 if ($step =~ m/$step_pattern/) {
                     eval { $cb->(); };
@@ -48,7 +49,6 @@ sub runtests {
                         $skip = 1;
                         $skip_reason = "Failed: $step_text";
                     }
-                    next;
                 }
             }
         }
