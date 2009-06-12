@@ -26,4 +26,4 @@ requires:
   Exporter::Lite: 0.02
 resources:
   license: http://opensource.org/licenses/mit-license.php
-version: 0.02
+version: 0.04

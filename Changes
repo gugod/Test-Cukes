@@ -1,8 +1,14 @@
-Revision history for Perl extension Test::Cukes
+# Revision history for Perl extension Test::Cukes
+
+0.04:
+- report missing steps as TAP note
+
+0.03:
+- if a step died, diag its dying message.
 
 0.02:
 - Count each block as one assertion-based test
-- If pre-condition steps fail, then its successing steps will be skipped. 
+- If pre-condition steps fail, then its successing steps will be skipped.
 
 0.01:
 - initial version
