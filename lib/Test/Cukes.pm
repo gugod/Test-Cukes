@@ -6,7 +6,7 @@ use Test::More;
 use Test::Cukes::Feature;
 use Carp::Assert;
 
-our $VERSION = "0.04";
+our $VERSION = "0.05";
 our @EXPORT = qw(feature runtests Given When Then assert affirm should shouldnt);
 
 our @missing_steps = ();
@@ -35,15 +35,19 @@ sub runtests {
     for my $scenario (@scenarios_of_caller) {
         my $skip = 0;
         my $skip_reason = "";
-
+        my $gwt;
         my %steps = %{$steps->{$caller} ||{}};
     SKIP:
         for my $step_text (@{$scenario->steps}) {
-            my (undef, $step) = split " ", $step_text, 2;
+            my ($pre, $step) = split " ", $step_text, 2;
             Test::More::skip($step, 1) if $skip;
 
+            $gwt = $pre if $pre =~ /(Given|When|Then)/;
+
             my $found_step = 0;
-            while (my ($step_pattern, $cb) = each %steps) {
+            for my $step_pattern (keys %steps) {
+                my $cb = $steps{$step_pattern};
+
                 if ($step =~ m/$step_pattern/) {
                     eval { $cb->(); };
                     Test::More::ok(!$@, $step_text);
@@ -60,6 +64,7 @@ sub runtests {
             }
 
             unless($found_step) {
+                $step_text =~ s/^And /$gwt /;
                 push @missing_steps, $step_text;
             }
         }
@@ -71,6 +76,7 @@ sub runtests {
 }
 
 sub report_missing_steps {
+    return if @missing_steps == 0;
     Test::More::note("There are missing step definitions, fill them in:");
     for my $step_text (@missing_steps) {
         my ($word, $text) = ($step_text =~ /^(Given|When|Then) (.+)$/);
