@@ -71,6 +71,7 @@ sub runtests {
 }
 
 sub report_missing_steps {
+    return if @missing_steps == 0;
     Test::More::note("There are missing step definitions, fill them in:");
     for my $step_text (@missing_steps) {
         my ($word, $text) = ($step_text =~ /^(Given|When|Then) (.+)$/);
