@@ -6,7 +6,7 @@ use Test::More;
 use Test::Cukes::Feature;
 use Carp::Assert;
 
-our $VERSION = "0.05";
+our $VERSION = "0.06";
 our @EXPORT = qw(feature runtests Given When Then assert affirm should shouldnt);
 
 our @missing_steps = ();
@@ -23,6 +23,12 @@ sub feature {
 
 sub runtests {
     my $caller = caller;
+    my $feature_text = shift;
+
+    if ($feature_text) {
+        $feature->{$caller} = Test::Cukes::Feature->new($feature_text);
+    }
+
     my $total_tests = 0;
     my @scenarios_of_caller = @{$feature->{$caller}->scenarios};
 
@@ -80,7 +86,7 @@ sub report_missing_steps {
     Test::More::note("There are missing step definitions, fill them in:");
     for my $step_text (@missing_steps) {
         my ($word, $text) = ($step_text =~ /^(Given|When|Then) (.+)$/);
-        my $msg = "\n$word qr/${text}/ => sub {\n    ...\n}\n";
+        my $msg = "\n$word qr/${text}/ => sub {\n    ...\n};\n";
         Test::More::note($msg);
     }
 }
