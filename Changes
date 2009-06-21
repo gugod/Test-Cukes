@@ -1,5 +1,8 @@
 # Revision history for Perl extension Test::Cukes
 
+0.06:
+- let runtests accept feature text too
+
 0.05:
 - Fix the missing step report of "And" steps.
 
