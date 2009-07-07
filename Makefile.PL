@@ -2,7 +2,7 @@ use inc::Module::Install;
 name 'Test-Cukes';
 all_from 'lib/Test/Cukes.pm';
 
-perl_version '5.010';
+perl_version '5.008';
 
 requires
     "Carp::Assert"       => "0.20",
