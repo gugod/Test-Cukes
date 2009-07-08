@@ -1,7 +1,7 @@
 # Revision history for Perl extension Test::Cukes
 
 0.07:
-- specifically requires perl 5.010
+- makes it perl 5.8 compatible. thanks to miyagawa++
 
 0.06:
 - let runtests accept feature text too
