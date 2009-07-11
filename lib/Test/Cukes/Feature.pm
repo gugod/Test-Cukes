@@ -1,6 +1,5 @@
 package Test::Cukes::Feature;
 use Any::Moose;
-use 5.010;
 
 use Test::Cukes::Scenario;
 

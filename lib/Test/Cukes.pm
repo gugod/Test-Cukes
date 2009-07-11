@@ -6,7 +6,7 @@ use Test::More;
 use Test::Cukes::Feature;
 use Carp::Assert;
 
-our $VERSION = "0.06";
+our $VERSION = "0.07";
 our @EXPORT = qw(feature runtests Given When Then assert affirm should shouldnt);
 
 our @missing_steps = ();

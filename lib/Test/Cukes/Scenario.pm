@@ -1,6 +1,5 @@
 package Test::Cukes::Scenario;
 use Any::Moose;
-use 5.010;
 
 has name => (
     is => "rw",
@@ -24,13 +23,10 @@ sub BUILDARGS {
         };
 
         for my $line (split /\n+/, $scenario_text) {
-            given ($line) {
-                when (/^Scenario:\s(.+)$/) {
-                    $args->{name} = $1;
-                }
-                when (/^  (Given|When|Then|And)\s(.+)$/) {
-                    push @{$args->{ steps }}, "$1 $2";
-                }
+            if ($line =~ /^Scenario:\s(.+)$/) {
+                $args->{name} = $1;
+            } elsif ($line =~ /^  (Given|When|Then|And)\s(.+)$/) {
+                push @{$args->{ steps }}, "$1 $2";
             }
         }
 
