@@ -130,15 +130,15 @@ Write your test program like this:
 
   Given qr/the test program is running/, sub {
       assert "running";
-  }
+  };
 
   When qr/it reaches this step/, sub {
       assert "reaches";
-  }
+  };
 
   Then qr/it should pass/, sub {
       assert "passes";
-  }
+  };
 
   runtests;
 
