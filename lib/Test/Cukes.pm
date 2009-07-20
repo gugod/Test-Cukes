@@ -6,7 +6,7 @@ use Test::More;
 use Test::Cukes::Feature;
 use Carp::Assert;
 
-our $VERSION = "0.07";
+our $VERSION = "0.08";
 our @EXPORT = qw(feature runtests Given When Then assert affirm should shouldnt);
 
 our @missing_steps = ();
@@ -30,6 +30,7 @@ sub runtests {
     }
 
     my $total_tests = 0;
+
     my @scenarios_of_caller = @{$feature->{$caller}->scenarios};
 
     for my $scenario (@scenarios_of_caller) {
@@ -42,7 +43,7 @@ sub runtests {
         my $skip = 0;
         my $skip_reason = "";
         my $gwt;
-        my %steps = %{$steps->{$caller} ||{}};
+
     SKIP:
         for my $step_text (@{$scenario->steps}) {
             my ($pre, $step) = split " ", $step_text, 2;
@@ -51,8 +52,8 @@ sub runtests {
             $gwt = $pre if $pre =~ /(Given|When|Then)/;
 
             my $found_step = 0;
-            for my $step_pattern (keys %steps) {
-                my $cb = $steps{$step_pattern};
+            for my $step_pattern (keys %$steps) {
+                my $cb = $steps->{$step_pattern}->{code};
 
                 if ($step =~ m/$step_pattern/) {
                     eval { $cb->(); };
@@ -93,8 +94,16 @@ sub report_missing_steps {
 
 sub _add_step {
     my ($step, $cb) = @_;
-    my $caller = caller;
-    $steps->{$caller}{$step} = $cb;
+    my ($package, $filename, $line) = caller;
+
+    $steps->{$step} = {
+        definition => {
+            package => $package,
+            filename => $filename,
+            line => $line,
+        },
+        code => $cb
+    };
 }
 
 *Given = *_add_step;
@@ -130,15 +139,15 @@ Write your test program like this:
 
   Given qr/the test program is running/, sub {
       assert "running";
-  }
+  };
 
   When qr/it reaches this step/, sub {
       assert "reaches";
-  }
+  };
 
   Then qr/it should pass/, sub {
       assert "passes";
-  }
+  };
 
   runtests;
 

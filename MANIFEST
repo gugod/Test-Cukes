@@ -24,6 +24,7 @@ t/runtest-with-arg.t
 t/runtest-without-defined-steps.t
 t/runtest.t
 t/scenario.t
+t/steps-from-other-namespace.t
 xt/01_podspell.t
 xt/02_perlcritic.t
 xt/03_pod.t
