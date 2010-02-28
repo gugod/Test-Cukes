@@ -5,7 +5,6 @@ my @passed;
 
 Given qr/blah1/ => sub {
     push @passed, 1;
-
     assert @passed == 1;
 };
 
@@ -22,7 +21,7 @@ Then qr/blah3/ => sub {
     # Cukes's plan.
     assert 1 == $passed[0];
     assert 2 == $passed[1];
-    assert 3 == $passed[3];
+    assert 3 == $passed[2];
 };
 
 runtests(<<FEATURE_TEXT);
