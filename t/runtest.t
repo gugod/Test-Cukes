@@ -9,8 +9,8 @@ Feature: foo
 
   Scenario: blehbleh
     Given I will say the word 'cake'
-    When it is my birthday 
-    Then we will eat 28 cakes 
+    When it is my birthday
+    Then we will eat 28 cakes
 FEATURE_TEXT
 
 my @passed;
@@ -18,7 +18,7 @@ my @regex_matches;
 
 Given qr/I will say the word '(.+)'/ => sub {
     push @passed, 1;
-    push @regex_matches, shift;
+    push @regex_matches, @_;
 
     assert @passed        == 1;
     assert @regex_matches == 1
@@ -26,20 +26,27 @@ Given qr/I will say the word '(.+)'/ => sub {
 
 When qr/it is my birthday/ => sub {
     push @passed, 2;
-    push @regex_matches, shift;
 
     assert @passed        == 2;
-    assert @regex_matches == 2
+    assert @regex_matches == 1
 };
 
 Then qr/we will eat (\d+) (.+)/ => sub {
     push @passed, 3;
-    push @regex_matches, shift, shift;
+    push @regex_matches, @_;
 
     assert @passed        == 3;
-    assert @regex_matches == 4;
-    assert( @{[ 1, 2, 3 ]} == @passed );
-    assert( @{[ 'cake', undef, 27, 'cakes' ]} == @regex_matches);
+    assert @regex_matches == 3;
+
+    # We can't use is_deeply because Test::More doesn't play nice with
+    # Cukes's plan.
+    assert 1 == $passed[0];
+    assert 2 == $passed[1];
+    assert 3 == $passed[2];
+
+    assert 'cake'  eq $regex_matches[0];
+    assert 28      == $regex_matches[1];
+    assert 'cakes' eq $regex_matches[2];
 };
 
 runtests;

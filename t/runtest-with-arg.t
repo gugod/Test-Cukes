@@ -18,7 +18,11 @@ Then qr/blah3/ => sub {
     push @passed, 3;
     assert @passed == 3;
 
-    assert( @{[ 1, 2, 3 ]} == @passed );
+    # We can't use is_deeply because Test::More doesn't play nice with
+    # Cukes's plan.
+    assert 1 == $passed[0];
+    assert 2 == $passed[1];
+    assert 3 == $passed[3];
 };
 
 runtests(<<FEATURE_TEXT);
