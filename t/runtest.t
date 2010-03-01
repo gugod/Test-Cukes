@@ -1,6 +1,7 @@
 #!/usr/bin/env perl -w
 use strict;
 use Test::Cukes;
+use Test::More;
 
 feature(<<FEATURE_TEXT);
 Feature: foo
@@ -27,6 +28,9 @@ Given qr/I will say the word '(.+)'/ => sub {
 When qr/it is my birthday/ => sub {
     push @passed, 2;
 
+    ok 1, "Using is, ok, etc no longer screw up Cuke's test plan and cause"
+      . " it to fail.";
+
     assert @passed        == 2;
     assert @regex_matches == 1
 };
@@ -38,15 +42,9 @@ Then qr/we will eat (\d+) (.+)/ => sub {
     assert @passed        == 3;
     assert @regex_matches == 3;
 
-    # We can't use is_deeply because Test::More doesn't play nice with
-    # Cukes's plan.
-    assert 1 == $passed[0];
-    assert 2 == $passed[1];
-    assert 3 == $passed[2];
-
-    assert 'cake'  eq $regex_matches[0];
-    assert 28      == $regex_matches[1];
-    assert 'cakes' eq $regex_matches[2];
+    is_deeply [1, 2, 3], \@passed, "Steps were called in the correct order";
+    is_deeply ['cake', 28, 'cakes'], \@regex_matches, "Regex matches were"
+      . " correctly passed to the step functions";
 };
 
 runtests;

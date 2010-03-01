@@ -1,7 +1,7 @@
 #!/usr/bin/env perl -w
 use strict;
-use Test::Cukes;
 use Test::More;
+use Test::Cukes tests => 2;
 
 feature(<<FEATURE_TEXT);
 Feature: foo
@@ -24,5 +24,3 @@ runtests;
 
 is($hit_given, 0, "Correctly never ran the 'when' test"); 
 ok(@Test::Cukes::missing_steps == 3);
-pass; # one dummy
-
