@@ -55,8 +55,8 @@ sub runtests {
             for my $step_pattern (keys %$steps) {
                 my $cb = $steps->{$step_pattern}->{code};
 
-                if ($step =~ m/$step_pattern/) {
-                    eval { $cb->(); };
+                if (my (@matches) = $step =~ m/$step_pattern/) {
+                    eval { $cb->(@matches); };
                     Test::More::ok(!$@, $step_text);
 
                     if ($@) {
@@ -137,8 +137,9 @@ Write your test program like this:
       Then it should pass
   TEXT
 
-  Given qr/the test program is running/, sub {
-      assert "running";
+  Given qr/the (.+) program is (.+)/, sub {
+      my ($program_name, $running_or_failing) = @_;
+      assert "running program '$program_name'";
   };
 
   When qr/it reaches this step/, sub {
@@ -170,8 +171,10 @@ internally to print messages.
 This module implements the Given-When-Then clause only in English. To
 uses it in the test programs, feed the feature text into C<feature>
 function, defines your step handlers, and then run all the tests by
-calling C<runtests>. Each steps should use C<assert> instead of C<ok>
-or C<is> to verify desired result.
+calling C<runtests>. Step handlers may be defined in separate modules,
+as long as those modules are included before C<runtests> is called.
+Each step should use C<assert> instead of C<ok> or C<is> to verify
+desired result.
 
 If any assertion in the Given block failed, the the corresponding
 C<When> and C<Then> blocks are skipped.
@@ -189,6 +192,10 @@ the documents from L<http://cukes.info>.
 =head1 AUTHOR
 
 Kang-min Liu E<lt>gugod@gugod.orgE<gt>
+
+=head1 CONTRIBUTORS
+
+Tristan Pratt
 
 =head1 SEE ALSO
 
