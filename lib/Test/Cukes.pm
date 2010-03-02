@@ -175,8 +175,8 @@ result.  If you specify a plan explicitly, you should be aware that
 each step line in your scenario runs an additional test, and will
 therefore add to the number of tests you must indicate.
 
-If any assertion in the Given block failed, the the corresponding
-C<When> and C<Then> blocks are skipped.
+If any assertion in the Given block failed, the following C<When> and
+C<Then> blocks are all skipped.
 
 You don't need to specify the number of tests with C<plan>. Each step
 block itself is simply one test. If the block died, it's then
