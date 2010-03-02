@@ -197,7 +197,7 @@ Kang-min Liu E<lt>gugod@gugod.orgE<gt>
 
 =head1 CONTRIBUTORS
 
-Tristan Pratt
+Tatsuhiko Miyagawa, Tristan Pratt
 
 =head1 SEE ALSO
 

@@ -1,5 +1,8 @@
 # Revision history for Perl extension Test::Cukes
 
+NEXT:
+- Tristan Pratt makes it more compatible when using it with other Test::Bulder::Module-based tools.
+
 0.08:
 - allow step definitions to be defined in all namespaces.
 
