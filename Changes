@@ -1,6 +1,6 @@
 # Revision history for Perl extension Test::Cukes
 
-NEXT:
+0.09:
 - Tristan Pratt makes it more compatible when using it with other Test::Bulder::Module-based tools.
 
 0.08:

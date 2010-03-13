@@ -6,7 +6,7 @@ use Carp::Assert;
 
 use base 'Test::Builder::Module';
 
-our $VERSION = "0.08";
+our $VERSION = "0.09";
 our @EXPORT = qw(feature runtests Given When Then assert affirm should shouldnt);
 
 our @missing_steps = ();
