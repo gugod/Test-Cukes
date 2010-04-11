@@ -39,7 +39,7 @@ sub runtests {
     SKIP:
         for my $step_text (@{$scenario->steps}) {
             my ($pre, $step) = split " ", $step_text, 2;
-            Test::Cukes->skip($step, 1) if $skip;
+            Test::Cukes->builder->skip($step) if $skip;
 
             $gwt = $pre if $pre =~ /(Given|When|Then)/;
 
