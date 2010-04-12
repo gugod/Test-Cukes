@@ -36,10 +36,13 @@ sub runtests {
         my $skip_reason = "";
         my $gwt;
 
-    SKIP:
+
         for my $step_text (@{$scenario->steps}) {
             my ($pre, $step) = split " ", $step_text, 2;
-            Test::Cukes->skip($step, 1) if $skip;
+            if ($skip) {
+                Test::Cukes->builder->skip($step_text);
+                next;
+            }
 
             $gwt = $pre if $pre =~ /(Given|When|Then)/;
 
@@ -51,7 +54,7 @@ sub runtests {
                     eval { $cb->(@matches); };
                     Test::Cukes->builder->ok(!$@, $step_text);
 
-                    if ($@) {
+                    if ($skip == 0 && $@) {
                         Test::Cukes->builder->diag($@);
                         $skip = 1;
                         $skip_reason = "Failed: $step_text";
