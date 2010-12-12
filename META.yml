@@ -27,4 +27,4 @@ requires:
   perl: 5.8.0
 resources:
   license: http://opensource.org/licenses/mit-license.php
-version: 0.09
+version: 0.10
