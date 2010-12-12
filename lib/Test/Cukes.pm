@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use Test::Cukes::Feature;
 use Carp::Assert;
+use Try::Tiny;
 
 use base 'Test::Builder::Module';
 
@@ -51,10 +52,16 @@ sub runtests {
                 my $cb = $steps->{$step_pattern}->{code};
 
                 if (my (@matches) = $step =~ m/$step_pattern/) {
-                    eval { $cb->(@matches); };
-                    Test::Cukes->builder->ok(!$@, $step_text);
+                    my $ok = 1;
+                    try {
+                        $cb->(@matches);
+                    } catch {
+                        $ok = 0;
+                    };
 
-                    if ($skip == 0 && $@) {
+                    Test::Cukes->builder->ok($ok, $step_text);
+
+                    if ($skip == 0 && !$ok) {
                         Test::Cukes->builder->diag($@);
                         $skip = 1;
                         $skip_reason = "Failed: $step_text";

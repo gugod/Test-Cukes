@@ -5,6 +5,7 @@ perl_version '5.008';
 all_from 'lib/Test/Cukes.pm';
 
 requires
+    "Try::Tiny"              => "0.07",
     "Carp::Assert"           => "0.20",
     "Any::Moose"             => "0.07",
     "Test::Builder::Module"  => "0.80";
@@ -14,5 +15,4 @@ author_tests 'xt';
 
 build_requires 'Test::More';
 
-auto_include;
 WriteAll;
