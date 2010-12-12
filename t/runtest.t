@@ -13,11 +13,6 @@ Feature: foo
     When it is my birthday
     Then we will eat 28 cakes
 
-  Scenario: Failed assertion leads to skipping remaining steps
-    Given anything
-    When I fail this step
-    Then I skip this one
-
 FEATURE_TEXT
 
 my @passed;
@@ -51,20 +46,6 @@ Then qr/we will eat (\d+) (.+)/ => sub {
     is_deeply [1, 2, 3], \@passed, "Steps were called in the correct order";
     is_deeply ['cake', 28, 'cakes'], \@regex_matches, "Regex matches were"
       . " correctly passed to the step functions";
-};
-
-
-Given qr/anything/ => sub {
-    assert "Anything is ok";
-    ok 1, "passed Given";
-};
-
-When qr/fail/ => sub {
-    assert 0 == 1;
-};
-
-Then qr/skip/ => sub {
-    ok 0, "This shoudln't be executed at all!";
 };
 
 runtests;
