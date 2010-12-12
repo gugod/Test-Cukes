@@ -1,5 +1,8 @@
 # Revision history for Perl extension Test::Cukes
 
+0.10:
+- Fix META.yml and use Try::Tiny FTW.
+
 0.09:
 - Tristan Pratt makes it more compatible when using it with other Test::Bulder::Module-based tools.
 
