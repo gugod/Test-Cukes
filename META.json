@@ -4,13 +4,13 @@
       "Kang-min Liu <gugod@gugod.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v2.5.0, CPAN::Meta::Converter version 2.150001",
+   "generated_by" : "Minilla/v3.1.4, CPAN::Meta::Converter version 2.150010",
    "license" : [
       "mit"
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
-      "version" : "2"
+      "version" : 2
    },
    "name" : "Test-Cukes",
    "no_index" : {
@@ -34,7 +34,7 @@
       },
       "configure" : {
          "requires" : {
-            "Module::Build" : "0.38"
+            "Module::Build::Tiny" : "0.035"
          }
       },
       "develop" : {
@@ -48,8 +48,8 @@
       },
       "runtime" : {
          "requires" : {
-            "Any::Moose" : "0.07",
             "Carp::Assert" : "0.20",
+            "Moose" : "0",
             "Test::Builder::Module" : "0.80",
             "Try::Tiny" : "0.07",
             "perl" : "5.008"
@@ -68,10 +68,12 @@
          "web" : "https://github.com/gugod/Test-Cukes"
       }
    },
-   "version" : "0.10",
+   "version" : "0.11",
    "x_contributors" : [
       "Tatsuhiko Miyagawa <miyagawa@bulknews.net>",
-      "prat0088 <prat0088@gmail.com>",
-      "Yann Kerherve <yann@cyberion.net>"
-   ]
+      "Yann Kerherve <yann@cyberion.net>",
+      "prat0088 <prat0088@gmail.com>"
+   ],
+   "x_serialization_backend" : "JSON::PP version 2.97001",
+   "x_static_install" : 1
 }

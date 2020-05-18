@@ -97,9 +97,7 @@ implementation of Cucumber tool.
 
 [Carp::Assert](https://metacpan.org/pod/Carp::Assert)
 
-# LICENSE AND COPYRIGHT
-
-Copyright (c) 2009, Kang-min Liu `<gugod@gugod.org>`.
+# LICENSE
 
 This is free software, licensed under:
 
