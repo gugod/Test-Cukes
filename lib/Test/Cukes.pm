@@ -218,9 +218,7 @@ implementation of Cucumber tool.
 
 L<Carp::Assert>
 
-=head1 LICENSE AND COPYRIGHT
-
-Copyright (c) 2009, Kang-min Liu C<< <gugod@gugod.org> >>.
+=head1 LICENSE
 
 This is free software, licensed under:
 
