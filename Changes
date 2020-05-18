@@ -1,3 +1,6 @@
+0.11 2020-05-19T07:40:46+0800
+  - replace the deprecated Any::Moose with Moose
+
 0.10
   - Fix META.yml and use Try::Tiny FTW.
 
