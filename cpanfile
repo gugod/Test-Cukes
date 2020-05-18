@@ -1,4 +1,4 @@
-requires 'Any::Moose', '0.07';
+requires 'Moose';
 requires 'Carp::Assert', '0.20';
 requires 'Test::Builder::Module', '0.80';
 requires 'Try::Tiny', '0.07';
